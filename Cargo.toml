@@ -1,0 +1,36 @@
+[package]
+name = "evp-mark"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+# Deliberately permissive: a detector nobody may redistribute is not a public detector.
+license = "MIT OR Apache-2.0"
+description = "A machine-readable mark on synthetic audio, and the detector for it."
+readme = "README.md"
+repository = "https://github.com/samjanny/evp-mark"
+homepage = "https://aftervoice.altrovelabs.net/detector.html"
+documentation = "https://docs.rs/evp-mark"
+keywords = ["watermark", "audio", "ai-act", "provenance", "steganography"]
+categories = ["multimedia::audio"]
+# The licence texts travel with the crate. A crate that says "MIT OR Apache-2.0" and
+# ships neither is asking to be taken on trust, which is the opposite of the point.
+include = ["src/**", "tests/**", "README.md", "LICENSE-MIT", "LICENSE-APACHE"]
+
+[dependencies]
+blake3 = "1.8.2"
+rand = "0.9.2"
+rand_chacha = "0.9.0"
+rustfft = "6.4.1"
+thiserror = "2.0.16"
+# Only the binary reads files. It is a default feature because the reason this crate is public
+# is so that someone can run the detector, and a detector that needs a flag before it exists is
+# a detector most people will not run. A library user turns it off with default-features = false.
+hound = { version = "3.5.1", optional = true }
+
+[features]
+default = ["cli"]
+cli = ["dep:hound"]
+
+[[bin]]
+name = "detect-mark"
+required-features = ["cli"]
