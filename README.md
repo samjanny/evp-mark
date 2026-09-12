@@ -27,8 +27,9 @@ either of them asking us anything.
 
 A spread-spectrum watermark in the sound itself, not a tag on the file. The audio is cut into
 overlapping 2048-sample windows at 48 kHz; in each one a pseudo-random pattern nudges some
-frequency bins slightly louder and others slightly quieter, about 0.7 dB, in a band where a
-small change is least likely to be heard and least likely to be destroyed.
+frequency bins slightly louder and others slightly quieter, about 1.6 dB, in a band where a
+small change is least likely to be heard and least likely to be destroyed. This strength
+(`alpha = 0.20`) was selected by a blind listening gate on 2026-09-12.
 
 Because it lives in the audio it survives sharing, re-encoding to a lossy format, a change of
 container, renaming, and a trim down to a few seconds.

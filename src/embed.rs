@@ -11,9 +11,9 @@ use crate::{MarkError, check};
 /// frame, which is the level at which the bed itself has stopped.
 pub const GATE_DBFS: f32 = -60.0;
 
-/// How hard the mark pushes: `1 + ALPHA` on a marked bin, about 0.71 dB at this value.
+/// How hard the mark pushes: `1 + ALPHA` on a marked bin, about 1.58 dB at this value.
 ///
-/// **Provisional, and measured rather than guessed.** The design opened at 0.02 with a search
+/// **Measured, then heard.** The design opened at 0.02 with a search
 /// over 0.01 … 0.06; over six-second beds that turned out to separate from the null by 1.5
 /// standard errors, which is nothing. What the measurement of 2026-09-09 gives:
 ///
@@ -24,14 +24,15 @@ pub const GATE_DBFS: f32 = -60.0;
 /// | 0.10 | 6.6 σ |
 /// | 0.20 | 12.7 σ |
 ///
-/// So the usable range is 0.05 … 0.20, not 0.01 … 0.06. We stay near its quiet edge while
-/// retaining enough margin to detect the six-second broadband fixture. Longer audio earns
-/// more confidence by integrating more blocks.
+/// So the usable range is 0.05 … 0.20, not 0.01 … 0.06. The listening gate on 2026-09-12
+/// chose its upper end: the thirty forced choices were 14/30 overall, and a follow-up
+/// triangle test at 0.20 was 5/12 (chance is 4/12).
 ///
-/// The upper bound is not a measurement. In this product a mark that is even marginally
-/// audible does not become a defect, it becomes part of the phenomenon it is marking — and
-/// identical in every generation, which is the opposite of "the voice arrives".
-pub const ALPHA: f32 = 0.085;
+/// Spectral separation alone was not enough to accept the upper bound. In this product a mark
+/// that is even marginally audible does not become a defect, it becomes part of the phenomenon
+/// it is marking — and identical in every generation, which is the opposite of "the voice
+/// arrives". That is why the human gate above decides the constant.
+pub const ALPHA: f32 = 0.20;
 
 /// Marks a finite buffer in place.
 ///
